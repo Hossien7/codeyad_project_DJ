@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def user_login(request):
     if request.method == "POST":
@@ -11,3 +11,12 @@ def user_login(request):
             login(user)
             return redirect('/')
     return render(request, 'login/index.html', {})
+def user_register(request):
+    pass
+
+def user_logout(request):
+    if request.user.is_authenticated:
+        logout()
+        return redirect('/')
+    else:
+        return render('home/index.html', {})

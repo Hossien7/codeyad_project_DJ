@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    
+    'django_cleanup.apps.CleanupConfig',  
+    # The django-cleanup app automatically deletes files for FileField,
+    # ImageField and subclasses. When a FileField’s value is changed and the model is saved,
+    # the old file is deleted.
+    
 
     'login.apps.LoginConfig',
     'home.apps.HomeConfig',
