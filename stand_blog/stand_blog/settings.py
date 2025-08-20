@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     'login.apps.LoginConfig',
     'home.apps.HomeConfig',
+    'blog.apps.BlogConfig',
     # 'account.apps.AccountConfig',
 
 ]
