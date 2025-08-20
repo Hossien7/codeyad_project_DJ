@@ -3,4 +3,4 @@ from blog.models import Article
 
 def home(request):
     obj = Article.objects.all()
-    return render(request, 'home/index.html', {'article': obj})
+    return render(request, 'home/index.html', {'articles': obj})

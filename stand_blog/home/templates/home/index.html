@@ -91,7 +91,7 @@ https://templatemo.com/tm-551-stand-blog
     <div class="main-banner header-text">
       <div class="container-fluid">
         <div class="owl-banner owl-carousel">
-          <div class="item">
+           <div class="item">
             <img src="{% static 'images/banner-item-01.jpg' %}" alt="">
             <div class="item-content">
               <div class="main-content">
@@ -107,7 +107,7 @@ https://templatemo.com/tm-551-stand-blog
               </div>
             </div>
           </div>
-          <div class="item">
+          <div class="item"> 
             <img src="{% static 'images/banner-item-02.jpg' %}" alt="">
             <div class="item-content">
               <div class="main-content">
@@ -129,11 +129,11 @@ https://templatemo.com/tm-551-stand-blog
             <div class="item-content">
               <div class="main-content">
                 <div class="meta-category">
-                  <span>Lifestyle</span>
+                  <span>{{ article.category.1.title }}</span>
                 </div>
                 <a href="post-details.html"><h4>{{ article.title }}</h4></a>
                 <ul class="post-info">
-                  <li><a href="#">{{ article.category.last }}</a></li>
+                  <li><a href="#">{{ article.category.first.title }}</a></li>
                   <li><a href="#">{{ article.updated }}</a></li>
                   <li><a href="#">72 Comments</a></li>
                 </ul>

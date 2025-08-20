@@ -11,7 +11,7 @@ def user_login(request):
             login(user)
             return redirect('/')
     return render(request, 'login/index.html', {})
-def user_register(request):
+def user_register(request): # user.object.create()
     pass
 
 def user_logout(request):
