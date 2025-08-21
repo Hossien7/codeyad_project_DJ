@@ -12,7 +12,7 @@ from django.utils import timezone
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField()
+    description = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
@@ -34,12 +34,25 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     up_date = models.DateField(timezone.now())
+    status = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.title} - {self.body[:30]}'
 
 
+    def save(self, *args, **kwargs):
+        print('hello')
+        super(Article, self).save(args, kwargs)
 
+
+class New(models.Model):
+    title = models.CharField(max_length=50)
+    desc = models.TextField()
+
+
+    def save(self, *args, **kwargs):
+        self.title = self.title.replace(' ', '_')
+        super(New, self).save(args, kwargs)
 
 
 # null ==> in DB
@@ -50,3 +63,9 @@ class Article(models.Model):
 # editable
 # choices
 # unique_for_date='up_date'
+
+
+# CRUD CREATE   READ                        UPDATE    DELETE
+#      .save     .filter(status=True) .create()    .get() .save               .delete()
+# new = New.objects.get(id=1)   reading with id == 1    get() just returned 1 object 
+# Queryset: a set of collections... like .all()  .filter()   lazy evaluation... is slower than.... db not hit
