@@ -17,7 +17,23 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     
+    
+class ArticleManager(models.Manager):
+    # def counter(self):
+    #     return len(self.all())
+    
+    def get_queryset(self):
+        return super(ArticleManager, self).get_queryset().filter(status=True)
+    
+    def published(self):
+        return self.filter(status=True)
+    
+    
 """ Each article has a user and each user can has several article ==>ManyToOne"""
+
+
+
+
 class Article(models.Model):
     CHOICES = (
         ('A', 'ais'),
@@ -35,6 +51,8 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     up_date = models.DateField(timezone.now())
     status = models.BooleanField(default=False)
+    objects = models.Manager()  # it must be here if you do custom manager
+    custom_object = ArticleManager()
     
     def __str__(self):
         return f'{self.title} - {self.body[:30]}'
