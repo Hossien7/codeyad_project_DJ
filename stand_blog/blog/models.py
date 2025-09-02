@@ -46,7 +46,6 @@ class Article(models.Model):
     
     Author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=750, choices=CHOICES, default='A', unique_for_date='up_date')
-    
     category = models.ManyToManyField(Category)
     body = models.TextField()
     image = models.ImageField(upload_to='Images/ArticlesImage')
@@ -58,6 +57,9 @@ class Article(models.Model):
     custom_object = ArticleManager()
     slug = models.SlugField(null=True, unique=True, blank=True) # Slug Field for using in URLS
     
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"slug": self.slug})  # changed for slug
     
@@ -68,6 +70,7 @@ class Article(models.Model):
     def __str__(self):
         return f'{self.title} - {self.body[:30]}'
 
+    
 
 
 class New(models.Model):

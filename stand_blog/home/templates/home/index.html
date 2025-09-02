@@ -75,7 +75,7 @@
                                     <span>{{ posts.title }}</span>
                                     <a href="{{ posts.get_absolute_url }}"><h4>{{ posts.title }}</h4></a>
                                     <ul class="post-info">
-                                        <li><a href="#">{{ posts.author.get_username }}</a></li>
+                                        <li><a href="#">{{ posts.Author.get_full_name }}</a></li>
                                         <li><a href="#">{{ posts.created }}</a></li>
                                     </ul>
                                     <p>{{ posts.body }}</p>
