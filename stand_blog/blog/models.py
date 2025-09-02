@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 # Many to Many
 # Many to one ==> ForeignKey
 # One to One
@@ -39,9 +41,10 @@ class Article(models.Model):
         ('A', 'ais'),
         ('B', 'blue'),
     )
-    Author = models.ForeignKey(User, on_delete=models.CASCADE)
     # Author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True) If you use SET_NULL you must do null=True
     # Author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default='1') If you use SET_DEFAULT you must do default
+    
+    Author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=750, choices=CHOICES, default='A', unique_for_date='up_date')
     
     category = models.ManyToManyField(Category)
@@ -53,14 +56,18 @@ class Article(models.Model):
     status = models.BooleanField(default=False)
     objects = models.Manager()  # it must be here if you do custom manager
     custom_object = ArticleManager()
+    slug = models.SlugField(null=True, unique=True, blank=True) # Slug Field for using in URLS
     
+    def get_absolute_url(self):
+        return reverse("blog:post_detail", kwargs={"slug": self.slug})  # changed for slug
+    
+    def save(self, force_insert = False, force_update = False, update_fields = None, using = None):
+        self.slug = slugify(self.title)
+        return super(Article, self).save()
+
     def __str__(self):
         return f'{self.title} - {self.body[:30]}'
 
-
-    def save(self, *args, **kwargs):
-        print('hello')
-        super(Article, self).save(args, kwargs)
 
 
 class New(models.Model):
