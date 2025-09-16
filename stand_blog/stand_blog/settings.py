@@ -77,7 +77,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'context_processor.context_processor.recent_post',
+                'context_processor.context_processor.recent_post',  # added for context_processor
+                'context_processor.context_processor.show_categories',  # added for context_processor
+
             ],
         },
     },

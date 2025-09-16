@@ -46,7 +46,7 @@ class Article(models.Model):
     
     Author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=750, choices=CHOICES, default='A', unique_for_date='up_date')
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name='category') # ==> we can change 'category' to '+' for reverse access disabling 
     body = models.TextField()
     image = models.ImageField(upload_to='Images/ArticlesImage')
     created = models.DateTimeField(auto_now_add=True)
