@@ -73,18 +73,17 @@ class Article(models.Model):
     def __str__(self):
         return f'{self.title} - {self.body[:30]}'
 
-    
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments') # related_name for reverse access
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    body = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    reply = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
 
 
-class New(models.Model):
-    title = models.CharField(max_length=50)
-    desc = models.TextField()
-
-
-    def save(self, *args, **kwargs):
-        self.title = self.title.replace(' ', '_')
-        super(New, self).save(args, kwargs)
-
+    def __str__(self):
+        return self.body[:30]
 
 # null ==> in DB
 # blank ==> in form

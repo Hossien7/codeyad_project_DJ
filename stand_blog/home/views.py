@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from blog.models import Article, New
+from blog.models import Article
 
 
 def home(request):
