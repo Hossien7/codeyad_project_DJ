@@ -9,28 +9,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home
+                    <li class="nav-item {% if request.resolver_match.url_name == 'home_page' %}active{% endif %}">
+                        <a class="nav-link" href={% url "main:home_page" %}>Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="about.html">About Us</a>
-                    </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'show_posts' %}active{% endif %}">
                         <a class="nav-link" href={% url "blog:show_posts" %}>Blog Entries</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="post-details.html">Post Details</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'logout' and request.resolver_match.app_name == 'login' %}active{% endif %}">
                         {% if user.is_authenticated %}
                         <a class="nav-link" href={% url "login:logout" %}>Logout</a>
-                    <li class="nav-item">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'home_page' %}active{% endif %}">
                         <a class="nav-link" href={% url "main:home_page" %}>
                         <button class="btn-danger">
                             {{ request.user.username }}</a>
