@@ -60,6 +60,9 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
+        ordering = ('-created',)
+
+
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"slug": self.slug})  # changed for slug
     
