@@ -8,7 +8,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            login(user)
+            login(request, user)
             return redirect('/')
     return render(request, 'login/index.html', {})
 def user_register(request): # user.object.create()
@@ -16,7 +16,7 @@ def user_register(request): # user.object.create()
 
 def user_logout(request):
     if request.user.is_authenticated:
-        logout()
+        logout(request)
         return redirect('/')
     else:
         return render('home/index.html', {})
