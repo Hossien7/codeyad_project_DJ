@@ -37,15 +37,11 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
-    CHOICES = (
-        ('A', 'ais'),
-        ('B', 'blue'),
-    )
     # Author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True) If you use SET_NULL you must do null=True
     # Author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default='1') If you use SET_DEFAULT you must do default
     
     Author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=750, choices=CHOICES, default='A', unique_for_date='up_date')
+    title = models.CharField(max_length=750, unique_for_date='up_date')
     category = models.ManyToManyField(Category, related_name='category') # ==> we can change 'category' to '+' for reverse access disabling 
     body = models.TextField()
     image = models.ImageField(upload_to='Images/ArticlesImage')

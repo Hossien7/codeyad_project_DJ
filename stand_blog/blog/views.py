@@ -29,3 +29,12 @@ def category_detail(request, pk=None):
     article = category.article_set.all()    # Reverse access in db category to article
     
     return render(request, 'blog/articles_list.html', {'articles': article})
+
+def search(request):
+    q = request.GET.get('q')    # the name of search_input in form
+    article = Article.objects.filter(title__icontains=q)
+    print(article)
+    page_number = request.GET.get('page')
+    paginator = Paginator(article, 1)
+    object_list = paginator.get_page(page_number)
+    return render(request, 'blog/articles_list.html', context={'articles': object_list})
