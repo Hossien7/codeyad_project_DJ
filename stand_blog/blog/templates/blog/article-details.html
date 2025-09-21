@@ -77,24 +77,29 @@
                                             {% if comment.reply == None %}
                                             <li>
                                                 <div class="author-thumb">
-                                                    <img src="assets/images/comment-author-01.jpg" alt="">
+                                                    <img src="{% static "images/comment-author-01.jpg" %}" alt="">
                                                 </div>
                                                 <div class="right-content">
                                                     <h4>{{ comment.user.get_full_name }}<span>{{ comment.date }}</span></h4>
                                                     <p>{{ comment.body }}</p>
+                                                    <button type="button" onclick="set_value({{ comment.id }})">
+                                                        Reply
+                                                    </button>
                                                 </div>
                                             </li>
                                             {% endif %}
+                                            <br/>
                                             {% for reply in comment.replies.all %}
+                                                
                                                 <li class="replied">
-                                            <div class="author-thumb">
-                                                <img src={% static "assets/images/comment-author-02.jpg" %} alt="">
-                                            </div>
-                                            <div class="right-content">
-                                                <h4>{{ reply.user.get_full_name }}<span>{{ reply.date }}</span></h4>
-                                                <p>{{ reply.body }}</p>
-                                            </div>
-                                        </li>
+                                                    <div class="author-thumb">
+                                                        <img src="{% static "images/comment-author-02.jpg" %}" alt="">
+                                                    </div>
+                                                    <div class="right-content">
+                                                        <h4>{{ reply.user.get_full_name }}<span>{{ reply.date }}</span></h4>
+                                                        <p>{{ reply.body }}</p>
+                                                    </div>
+                                                </li>
                                             {% endfor %}
                                         {% endfor %}
                                         
@@ -104,36 +109,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="sidebar-item submit-comment">
+                        {% if request.user.is_authenticated %}
+                            <div class="col-lg-12">
+                                <div class="sidebar-item submit-comment">
                                 <div class="sidebar-heading">
-                                    <h2>Your comment</h2>
+                                    <h2 id="hi">Your comment</h2>
                                 </div>
                                 <div class="content">
                                     <form id="comment" action="#" method="post">
+                                        <input type="hidden" id="parent_id" name="parent_id" value="">
+
+                                        {% csrf_token %}
                                         <div class="row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <fieldset>
-                                                    <input name="name" type="text" id="name" placeholder="Your name"
-                                                           required="">
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <fieldset>
-                                                    <input name="email" type="text" id="email" placeholder="Your email"
-                                                           required="">
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <input name="subject" type="text" id="subject"
-                                                           placeholder="Subject">
-                                                </fieldset>
-                                            </div>
+
                                             <div class="col-lg-12">
                                                 <fieldset>
-                                                    <textarea name="message" rows="6" id="message"
-                                                              placeholder="Type your comment" required=""></textarea>
+                                                    <textarea name="body" rows="6" id="body"
+                                                        placeholder="Type your comment" required=""></textarea>
                                                 </fieldset>
                                             </div>
                                             <div class="col-lg-12">
@@ -146,7 +138,11 @@
                                     </form>
                                 </div>
                             </div>
+                            {% else %}
+                                <a class="btn btn-danger" href="{% url 'login:login' %}">Login to comment</a>
                         </div>
+                        {% endif %}
+                        
                     </div>
                 </div>
             </div>
@@ -156,6 +152,14 @@
         </div>
     </div>
 </section>
+<script>
+function set_value(id) {
+    // رفتن به بخش نظرات
+    window.location.href = '#hi';
+    document.getElementById('parent_id').value = id;
+    console.log(document.getElementById('parent_id').value);  // برای بررسی
+}
 
+</script>
 
 {% endblock content %}
