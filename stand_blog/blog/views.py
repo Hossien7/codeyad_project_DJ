@@ -41,11 +41,11 @@ def search(request):
 
 def contact_us(request):  
     if request.method == 'POST':
-        form = ContactUsForm(request.POST or None)  #
-        if form.is_valid():
-            
+        form = ContactUsForm(data=request.POST or None)  # Bind data to the form
+        
+        if form.is_valid(): # Validate the form
             print(form.cleaned_data['name']) 
             return redirect('main:home_page')
-        
-    form = ContactUsForm(request.POST or None)
+    else:
+        form = ContactUsForm()  # Unbound form for GET request
     return render(request, 'blog/contact_us.html', context={'form': form})
