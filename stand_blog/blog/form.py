@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import ValidationError
+from blog.models import Message
 
 class ContactUsForm(forms.Form):    # Define a form class
     name = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}))
@@ -17,3 +18,19 @@ class ContactUsForm(forms.Form):    # Define a form class
         if 'a' in name:
             raise ValidationError('A is in text', code='invalid')
         return name
+    
+
+class MessageForm(forms.ModelForm): 
+    class Meta:
+        model = Message
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder':'enter your title'
+            }),
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter your text'
+            })
+        }

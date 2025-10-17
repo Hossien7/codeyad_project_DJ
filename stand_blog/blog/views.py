@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Article, Category, Comment
+from blog.models import Article, Category, Comment, Message
 from django.core.paginator import Paginator
-from .form import ContactUsForm
+from .form import ContactUsForm, MessageForm
 
 def post_detail(request, slug):
     article = get_object_or_404(Article, slug=slug)
@@ -48,4 +48,16 @@ def contact_us(request):
             return redirect('main:home_page')
     else:
         form = ContactUsForm()  # Unbound form for GET request
+    return render(request, 'blog/contact_us.html', context={'form': form})
+
+
+def contactus(request):
+    if request.method == 'POST':
+        form = MessageForm(data=request.POST)
+        if form.is_valid():
+            instance = form.save(commit=True)
+            # ....
+            instance.save()
+    else:
+        form = MessageForm()
     return render(request, 'blog/contact_us.html', context={'form': form})

@@ -80,6 +80,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body[:30]
+    
+
+class Message(models.Model):
+    title = models.CharField(max_length=100)
+    text = models.TextField()
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
 
 # null ==> in DB
 # blank ==> in form
